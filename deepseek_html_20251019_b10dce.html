@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Dimension | Personal Blog</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for Theme */
+        :root {
+            --primary: #0a0a1f;
+            --secondary: #15152e;
+            --accent-1: #6a00ff;
+            --accent-2: #00d4ff;
+            --accent-3: #ff00c8;
+            --accent-4: #00ff88;
+            --text: #ffffff;
+            --text-secondary: #b0b0ff;
+            --card-bg: rgba(20, 20, 40, 0.7);
+            --card-border: rgba(106, 0, 255, 0.3);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            --gradient: linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3));
+        }
+
+        .light-theme {
+            --primary: #f0f5ff;
+            --secondary: #e6eeff;
+            --accent-1: #6a00ff;
+            --accent-2: #0080ff;
+            --accent-3: #ff0080;
+            --accent-4: #00cc66;
+            --text: #222244;
+            --text-secondary: #444466;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(106, 0, 255, 0.2);
+            --shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        /* Diwali Popup Styles */
+        .diwali-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .diwali-popup.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .diwali-content {
+            background: linear-gradient(135deg, #ff9933, #ff6600, #ff3300);
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 0 0 50px rgba(255, 153, 51, 0.7);
+            max-width: 600px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: diwaliGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes diwaliGlow {
+            0% { box-shadow: 0 0 30px rgba(255, 153, 51, 0.7); }
+            100% { box-shadow: 0 0 60px rgba(255, 102, 0, 0.9), 0 0 90px rgba(255, 51, 0, 0.7); }
+        }
+
+        .diwali-content::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: conic-gradient(
+                #ff9933, #ff6600, #ff3300, #ffcc00, #ff9933
+            );
+            z-index: -1;
+            border-radius: 30px;
+            animation: rotate 10s linear infinite;
+        }
+
+        .diwali-title {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            text-shadow: 0 0 10px #ffcc00, 0 0 20px #ff9900, 0 0 30px #ff6600;
+            animation: textFlicker 2s infinite alternate;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        @keyframes textFlicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 10px #ffcc00, 0 0 20px #ff9900, 0 0 30px #ff6600;
+                opacity: 1;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+                opacity: 0.8;
+            }
+        }
+
+        .diwali-message {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            color: #fff;
+            text-shadow: 0 0 5px #ffcc00;
+        }
+
+        .diwali-button {
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #ffcc00, #ff9900);
+            color: #8b4513;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(255, 153, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .diwali-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.7s;
+            z-index: -1;
+        }
+
+        .diwali-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(255, 153, 0, 0.8);
+        }
+
+        .diwali-button:hover::before {
+            left: 100%;
+        }
+
+        /* Firecracker animations */
+        .firecracker {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .spark {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Existing styles remain the same */
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg);
+            border: 2px solid var(--accent-1);
+            box-shadow: 0 0 25px var(--accent-2);
+            backdrop-filter: blur(15px);
+            color: var(--text);
+            padding: 1.2rem 2.5rem;
+            border-radius: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.2rem;
+            z-index: 2000;
+            transition: var(--transition);
+            opacity: 0;
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        .notification i {
+            color: var(--accent-3);
+            font-size: 1.5rem;
+        }
+
+        .notification.show {
+            top: 50px;
+            opacity: 1;
+            animation: slideDown 1s ease, pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes slideDown {
+            0% { top: -100px; opacity: 0; transform: translateX(-50%) scale(0.8); }
+            60% { top: 60px; opacity: 1; transform: translateX(-50%) scale(1.05); }
+            100% { top: 50px; transform: translateX(-50%) scale(1); }
+        }
+
+        @keyframes pulseGlow {
+            0% { box-shadow: 0 0 20px var(--accent-1); }
+            100% { box-shadow: 0 0 40px var(--accent-3), 0 0 60px var(--accent-4); }
+        }
+        /* Particle Container */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        /* Welcome Screen */
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+
+        .welcome-content {
+            text-align: center;
+            padding: 3rem;
+            background: var(--card-bg);
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--card-border);
+            max-width: 500px;
+            width: 90%;
+            animation: float 6s ease-in-out infinite, glow 4s ease-in-out infinite alternate;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-content::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent, 
+                rgba(106, 0, 255, 0.3), 
+                transparent 30%
+            );
+            animation: rotate 10s linear infinite;
+            z-index: -1;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(1deg); }
+            50% { transform: translateY(-10px) rotate(-1deg); }
+            75% { transform: translateY(-15px) rotate(1deg); }
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(106, 0, 255, 0.3); }
+            100% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.5); }
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .welcome-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textShine 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes textShine {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .name-input {
+            width: 100%;
+            padding: 1.2rem;
+            margin: 1.5rem 0;
+            border: none;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            font-size: 1.1rem;
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid transparent;
+        }
+
+        .name-input:focus {
+            outline: none;
+            border: 1px solid var(--accent-1);
+            box-shadow: 0 0 20px rgba(106, 0, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        .btn {
+            padding: 1.2rem 2.5rem;
+            border: none;
+            border-radius: 15px;
+            background: var(--gradient);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(106, 0, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.7s;
+            z-index: -1;
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(106, 0, 255, 0.6);
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--card-border);
+            animation: slideInDown 1s ease;
+        }
+
+        @keyframes slideInDown {
+            0% { transform: translateY(-100px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .welcome-message {
+            font-size: 1.8rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textShine 3s ease-in-out infinite alternate;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(180deg) scale(1.1);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Profile Section */
+        .profile-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .profile-image {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInLeft 1s ease;
+        }
+
+        @keyframes fadeInLeft {
+            0% { transform: translateX(-50px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        .image-container {
+            width: 280px;
+            height: 280px;
+            border-radius: 50%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 40px var(--accent-1);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 40px var(--accent-1); }
+            50% { box-shadow: 0 0 60px var(--accent-2), 0 0 80px var(--accent-3); }
+        }
+
+        .image-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: conic-gradient(var(--accent-1), var(--accent-2), var(--accent-3), var(--accent-1));
+            z-index: -1;
+            border-radius: 50%;
+            animation: rotate 10s linear infinite;
+        }
+
+        .profile-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .profile-img:hover {
+            transform: scale(1.05);
+        }
+
+        .profile-details {
+            flex: 2;
+            min-width: 300px;
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--card-border);
+            transition: var(--transition);
+            animation: fadeInRight 1s ease;
+        }
+
+        @keyframes fadeInRight {
+            0% { transform: translateX(50px); opacity: 0; }
+            100% { transform: translateX(0); opacity: 1; }
+        }
+
+        .profile-details:hover {
+            transform: translateY(-10px) scale(1.01);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .profile-details h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .profile-details p {
+            margin-bottom: 1.2rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .skill {
+            padding: 0.7rem 1.2rem;
+            background: linear-gradient(135deg, rgba(106, 0, 255, 0.3), rgba(0, 212, 255, 0.3));
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border: 1px solid rgba(106, 0, 255, 0.2);
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .skill:hover {
+            transform: scale(1.1) translateY(-5px);
+            background: linear-gradient(135deg, rgba(106, 0, 255, 0.5), rgba(0, 212, 255, 0.5));
+            box-shadow: 0 5px 15px rgba(106, 0, 255, 0.4);
+        }
+
+        /* Projects Section */
+        .projects-section {
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .section-title {
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
+            text-align: center;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: textShine 3s ease-in-out infinite alternate;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--card-border);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            animation: cardAppear 0.8s ease;
+        }
+
+        @keyframes cardAppear {
+            0% { transform: scale(0.8); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .project-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .project-card:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gradient);
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .project-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 1.2rem;
+            color: var(--text);
+        }
+
+        .project-card p {
+            color: var(--text-secondary);
+            margin-bottom: 1.8rem;
+            line-height: 1.7;
+        }
+
+        .project-link {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: bold;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .project-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.7s;
+            z-index: -1;
+        }
+
+        .project-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(106, 0, 255, 0.5);
+        }
+
+        .project-link:hover::before {
+            left: 100%;
+        }
+
+        /* Diary Section */
+        .diary-section {
+            margin-bottom: 3rem;
+            animation: fadeIn 1s ease 0.5s both;
+        }
+
+        .diary-entries {
+            display: grid;
+            gap: 2.5rem;
+        }
+
+        .diary-entry {
+            background: var(--card-bg);
+            border-radius: 25px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--card-border);
+            transition: var(--transition);
+            animation: slideInUp 0.8s ease;
+        }
+
+        @keyframes slideInUp {
+            0% { transform: translateY(30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .diary-entry:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .entry-date {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            background: rgba(106, 0, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .entry-mood {
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .entry-content {
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        /* Share Section */
+        .share-section {
+            text-align: center;
+            padding: 4rem 0;
+            animation: fadeIn 1s ease 0.7s both;
+        }
+
+        .share-link {
+            display: inline-block;
+            padding: 1.5rem 3rem;
+            background: var(--gradient);
+            color: white;
+            text-decoration: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(106, 0, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .share-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.7s;
+            z-index: -1;
+        }
+
+        .share-link:hover {
+            transform: translateY(-8px) scale(1.05);
+            box-shadow: 0 12px 30px rgba(106, 0, 255, 0.6);
+        }
+
+        .share-link:hover::before {
+            left: 100%;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 2.5rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+            animation: fadeIn 1s ease 0.9s both;
+        }
+/* Music Popup Styles */
+.music-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 31, 0.85);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.music-popup.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.popup-content {
+    background: var(--card-bg);
+    border-radius: 25px;
+    padding: 2.5rem;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(15px);
+    border: 1px solid var(--card-border);
+    max-width: 450px;
+    width: 90%;
+    text-align: center;
+    animation: float 6s ease-in-out infinite, glow 4s ease-in-out infinite alternate;
+    position: relative;
+    overflow: hidden;
+}
+
+.popup-content::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        transparent, 
+        rgba(106, 0, 255, 0.3), 
+        transparent 30%
+    );
+    animation: rotate 10s linear infinite;
+    z-index: -1;
+}
+
+.popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.popup-header h2 {
+    font-size: 1.8rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: textShine 3s ease-in-out infinite alternate;
+}
+
+.popup-icon {
+    font-size: 2.5rem;
+    animation: bounce 2s infinite;
+}
+
+.popup-content p {
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.popup-buttons {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.popup-btn {
+    padding: 1rem 1.8rem;
+    border: none;
+    border-radius: 15px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.popup-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.7s;
+    z-index: -1;
+}
+
+.popup-btn:hover::before {
+    left: 100%;
+}
+
+.keep-btn {
+    background: var(--gradient);
+    color: white;
+    box-shadow: 0 4px 15px rgba(106, 0, 255, 0.4);
+}
+
+.stop-btn {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    border: 1px solid var(--card-border);
+}
+
+.popup-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(106, 0, 255, 0.6);
+}
+
+/* Music Toggle Button for Persistent Control */
+.music-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: var(--gradient);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: 0 4px 15px rgba(106, 0, 255, 0.4);
+    transition: var(--transition);
+    z-index: 100;
+}
+
+.music-toggle:hover {
+    transform: scale(1.1) rotate(15deg);
+    box-shadow: 0 8px 25px rgba(106, 0, 255, 0.6);
+            }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .profile-section {
+                flex-direction: column;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+            
+            .welcome-content h1 {
+                font-size: 2rem;
+            }
+            
+            .image-container {
+                width: 220px;
+                height: 220px;
+            }
+            
+            .diwali-title {
+                font-size: 2.5rem;
+            }
+            
+            .diwali-message {
+                font-size: 1.2rem;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <!-- Diwali Popup -->
+    <div id="diwaliPopup" class="diwali-popup">
+        <div class="diwali-content">
+            <h1 class="diwali-title">Happy Diwali!</h1>
+            <p class="diwali-message">Wishing you a festival filled with light, joy, and prosperity!</p>
+            <button class="diwali-button" id="closeDiwali">Celebrate!</button>
+        </div>
+    </div>
+    
+    <!-- Diwali Firecracker Audio -->
+    <audio id="diwaliSound" loop>
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-firecracker-burst-3109.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Particle Container -->
+    <div id="particles-js"></div>
+<!-- Add this audio element right after the opening body tag -->
+<audio id="backgroundMusic" loop>
+    <source src="6.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+</audio>
+
+<!-- Add this popup modal right after the audio element -->
+<div id="musicPopup" class="music-popup">
+    <div class="popup-content">
+        <div class="popup-header">
+            <h2>Cosmic Soundscape</h2>
+            <div class="popup-icon">🎵</div>
+        </div>
+        <p>Do you want to listen my favourite background music?</p>
+        <div class="popup-buttons">
+            <button id="keepMusic" class="popup-btn keep-btn">
+                <i class="fas fa-play-circle"></i> Keep Playing
+            </button>
+            <button id="stopMusic" class="popup-btn stop-btn">
+                <i class="fas fa-stop-circle"></i> Stop Music
+            </button>
+        </div>
+    </div>
+</div>
+    <!-- Welcome Screen -->
+    <div class="welcome-screen" id="welcomeScreen">
+        <div class="welcome-content">
+            <h1>Welcome to Cosmic Dimension</h1>
+            <p>May I know your name, space traveler?</p>
+            <input type="text" class="name-input" id="nameInput" placeholder="Enter your cosmic name">
+            <button class="btn" id="enterBtn">Enter the Dimension</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container" id="mainContent">
+        <header class="header">
+            <h1 class="welcome-message" id="welcomeMessage">Welcome to Cosmic Dimension Blog</h1>
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
+
+        <!-- Profile Section -->
+        <section class="profile-section">
+            <div class="profile-image">
+                <div class="image-container">
+                    <img src="3.png" alt="Profile Picture" class="profile-img">
+                </div>
+            </div>
+            <div class="profile-details">
+                <h2>Shaurya 😻</h2>
+                <p>Hello cosmic traveler! I'm a front-end developer and UI/UX designer with a passion for creating immersive digital experiences that transport users to new dimensions.</p>
+                <p>With over -999999 aura points in my school and +inf in the digital cosmos, I specialize in creating nothing with smooth nothings and interactive nothings.</p>
+                <p>When I'm not coding, I'm usually exploring the latest sleeping, studying not astrophysics but chemistry, or creating digital art inspired by the greatest Sleep.</p>
+                <div class="skills">
+                    <span class="skill">HTML</span>
+                    <span class="skill">CSS</span>
+                    <span class="skill">JavaScript</span>
+                    <span class="skill">React</span>
+                    <span class="skill">UI/UX Design</span>
+                    <span class="skill">Animation</span>
+                    <span class="skill">Responsive Design</span>
+                    <span class="skill">Sleeping</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section class="projects-section">
+            <h2 class="section-title">Cosmic Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>Nebula UI Framework</h3>
+                    <p>A cosmic design system with stellar components and interstellar animations for creating out-of-this-world user interfaces.</p>
+                    <a href="#" class="project-link">Explore Project</a>
+                </div>
+                <div class="project-card">
+                    <h3>Galaxy Explorer</h3>
+                    <p>An interactive 3D visualization of our solar system with detailed information about each planet and celestial body.</p>
+                    <a href="#" class="project-link">Explore Project</a>
+                </div>
+                <div class="project-card">
+                    <h3>Quantum Portfolio</h3>
+                    <p>A multidimensional portfolio website that exists in multiple states simultaneously until observed by the user.</p>
+                    <a href="#" class="project-link">Explore Project</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Diary Section -->
+        <section class="diary-section">
+            <h2 class="section-title">Cosmic Diary</h2>
+            <div class="diary-entries">
+                <div class="diary-entry">
+                    <div class="entry-header">
+                        <span class="entry-date">Stardate 2023.10.15</span>
+                        <span class="entry-mood">🚀</span>
+                    </div>
+                    <div class="entry-content">
+                        <p>Today I discovered a new CSS property that creates wormholes between elements. It's called <code>space-warp: fold;</code> and it allows elements to exist in multiple places at once. The implications for responsive design are astronomical!</p>
+                    </div>
+                </div>
+                <div class="diary-entry">
+                    <div class="entry-header">
+                        <span class="entry-date">Stardate 2023.09.28</span>
+                        <span class="entry-mood">🌌</span>
+                    </div>
+                    <div class="entry-content">
+                        <p>Spent the day optimizing the gravitational pull of my website's call-to-action buttons. Increased conversion by 47% by applying dark matter principles to the hover states. Users now feel physically drawn to click them!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Share Section -->
+        <section class="share-section">
+            <a href="#" class="share-link">
+                <i class="fas fa-share-alt"></i> Share This Cosmic Experience
+            </a>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Made with <i class="fas fa-heart" style="color: #ff0080;"></i> in the Cosmic Dimension</p>
+            <p>© 2023 Shaurya. All rights reserved across all dimensions.</p>
+        </footer>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification">
+        <i class="fas fa-bell"></i>
+        <span id="notificationText">Welcome to the Cosmic Dimension!</span>
+    </div>
+<!-- Add this button right before the closing body tag -->
+<button id="musicToggle" class="music-toggle">
+    <i class="fas fa-music"></i>
+</button>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // Initialize particles.js
+        particlesJS("particles-js", {
+            particles: {
+                number: { value: 80, density: { enable: true, value_area: 800 } },
+                color: { value: "#6a00ff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.5, random: true },
+                size: { value: 3, random: true },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: "#00d4ff",
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" },
+                    resize: true
+                }
+            }
+        });
+
+        // DOM Elements
+        const welcomeScreen = document.getElementById('welcomeScreen');
+        const mainContent = document.getElementById('mainContent');
+        const nameInput = document.getElementById('nameInput');
+        const enterBtn = document.getElementById('enterBtn');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const themeToggle = document.getElementById('themeToggle');
+        const notification = document.getElementById('notification');
+        const notificationText = document.getElementById('notificationText');
+        const diwaliPopup = document.getElementById('diwaliPopup');
+        const closeDiwali = document.getElementById('closeDiwali');
+        const diwaliSound = document.getElementById('diwaliSound');
+        const musicPopup = document.getElementById('musicPopup');
+        const keepMusicBtn = document.getElementById('keepMusic');
+        const stopMusicBtn = document.getElementById('stopMusic');
+        const musicToggle = document.getElementById('musicToggle');
+        const backgroundMusic = document.getElementById('backgroundMusic');
+
+        // Diwali Firecracker Animation
+        function createFirecracker(x, y) {
+            const firecracker = document.createElement('div');
+            firecracker.className = 'firecracker';
+            firecracker.style.left = `${x}px`;
+            firecracker.style.top = `${y}px`;
+            firecracker.style.background = getRandomColor();
+            document.body.appendChild(firecracker);
+            
+            // Explosion effect
+            setTimeout(() => {
+                firecracker.remove();
+                createExplosion(x, y);
+            }, 500);
+        }
+
+        function createExplosion(x, y) {
+            const colors = ['#ff9933', '#ff6600', '#ff3300', '#ffcc00', '#ffff00'];
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const spark = document.createElement('div');
+                spark.className = 'spark';
+                spark.style.left = `${x}px`;
+                spark.style.top = `${y}px`;
+                spark.style.background = colors[Math.floor(Math.random() * colors.length)];
+                document.body.appendChild(spark);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = 50 + Math.random() * 100;
+                const duration = 800 + Math.random() * 700;
+                
+                spark.animate([
+                    { transform: `translate(0, 0) scale(1)`, opacity: 1 },
+                    { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(0)`, opacity: 0 }
+                ], {
+                    duration: duration,
+                    easing: 'cubic-bezier(0.1, 0.8, 0.2, 1)',
+                    fill: 'forwards'
+                });
+                
+                setTimeout(() => spark.remove(), duration);
+            }
+        }
+
+        function getRandomColor() {
+            const colors = ['#ff9933', '#ff6600', '#ff3300', '#ffcc00', '#ffff00'];
+            return colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        function startFirecrackerShow() {
+            const interval = setInterval(() => {
+                const x = Math.random() * window.innerWidth;
+                const y = Math.random() * window.innerHeight;
+                createFirecracker(x, y);
+            }, 200);
+            
+            return interval;
+        }
+
+        // Show Diwali Popup
+        function showDiwaliPopup() {
+            diwaliPopup.classList.add('show');
+            diwaliSound.play();
+            
+            // Start firecracker animation
+            const firecrackerInterval = startFirecrackerShow();
+            
+            // Stop animation when popup is closed
+            closeDiwali.addEventListener('click', () => {
+                diwaliPopup.classList.remove('show');
+                diwaliSound.pause();
+                diwaliSound.currentTime = 0;
+                clearInterval(firecrackerInterval);
+            });
+        }
+
+        // Show notification
+        function showNotification(message) {
+            notificationText.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+
+        // Theme toggle
+        themeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('light-theme');
+            
+            if (document.body.classList.contains('light-theme')) {
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+                showNotification('Light mode activated!');
+            } else {
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+                showNotification('Dark mode activated!');
+            }
+        });
+
+        // Enter button event
+        enterBtn.addEventListener('click', () => {
+            const name = nameInput.value.trim() || 'Cosmic Traveler';
+            welcomeMessage.textContent = `Welcome, ${name}!`;
+            
+            welcomeScreen.style.opacity = '0';
+            welcomeScreen.style.visibility = 'hidden';
+            
+            setTimeout(() => {
+                mainContent.style.opacity = '1';
+                mainContent.style.transform = 'translateY(0)';
+                showNotification(`Welcome to the Cosmic Dimension, ${name}!`);
+                
+                // Show Diwali popup after a short delay
+                setTimeout(showDiwaliPopup, 1000);
+            }, 500);
+        });
+
+        // Enter on pressing Enter key
+        nameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                enterBtn.click();
+            }
+        });
+
+        // Music popup functionality
+        function showMusicPopup() {
+            musicPopup.classList.add('show');
+        }
+
+        keepMusicBtn.addEventListener('click', () => {
+            musicPopup.classList.remove('show');
+            backgroundMusic.play();
+            showNotification('Cosmic soundtrack activated!');
+        });
+
+        stopMusicBtn.addEventListener('click', () => {
+            musicPopup.classList.remove('show');
+            showNotification('Music stopped. You can enable it later from the music button.');
+        });
+
+        musicToggle.addEventListener('click', () => {
+            if (backgroundMusic.paused) {
+                backgroundMusic.play();
+                showNotification('Cosmic soundtrack activated!');
+            } else {
+                backgroundMusic.pause();
+                showNotification('Music paused');
+            }
+        });
+
+        // Show music popup after Diwali popup is closed
+        closeDiwali.addEventListener('click', () => {
+            setTimeout(showMusicPopup, 1000);
+        });
+
+        // Initialize
+        window.addEventListener('load', () => {
+            nameInput.focus();
+        });
+    </script>
+</body>
+</html>
