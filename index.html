@@ -1511,6 +1511,36 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(showNewStoryNotification, 3000);
     });
 </script>
+    <script>
+        // Diwali popup functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const diwaliPopup = document.getElementById('diwaliPopup');
+        const diwaliSound = document.getElementById('diwaliSound');
+        const closeDiwaliBtn = document.getElementById('closeDiwali');
+        
+        // Show Diwali popup after a short delay
+        setTimeout(() => {
+            diwaliPopup.classList.add('show');
+            
+            // Play Diwali sound
+            diwaliSound.volume = 0.3;
+            diwaliSound.play().catch(e => {
+                console.log("Autoplay prevented for Diwali sound:", e);
+            });
+        }, 1000);
+        
+        // Close Diwali popup
+        closeDiwaliBtn.addEventListener('click', function() {
+            diwaliPopup.classList.remove('show');
+            diwaliSound.pause();
+            
+            // Show welcome screen after Diwali popup closes
+            setTimeout(() => {
+                document.getElementById('welcomeScreen').style.display = 'flex';
+            }, 500);
+        });
+    });
+    </script>
 </body><!-- New Story Notification -->
 
 </html>
